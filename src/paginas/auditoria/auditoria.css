@@ -1,0 +1,257 @@
+.intro-auditoria {
+  max-width: 70ch;
+  color: var(--texto-suave);
+  margin: 0 0 1.25rem;
+}
+
+.auditoria-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .auditoria-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.config-sistema {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.config-sistema label {
+  font-weight: 600;
+}
+
+.config-sistema input,
+.config-sistema textarea {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--borde);
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+  resize: vertical;
+}
+
+.filtro-marco {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.chip-marco {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--borde);
+  background: var(--superficie);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.chip-marco.activo {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #ffffff;
+}
+
+.lista-criterios {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.criterio {
+  border-left: 4px solid var(--borde);
+}
+
+.criterio.estado-approved {
+  border-left-color: var(--acento);
+}
+
+.criterio.estado-draft {
+  border-left-color: var(--advertencia);
+}
+
+.criterio.estado-rejected {
+  border-left-color: var(--peligro);
+}
+
+.cabecera-criterio {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.cabecera-criterio h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  flex: 1;
+}
+
+.categoria-criterio {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--texto-suave);
+}
+
+.badge-estado {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+
+.badge-estado.estado-pending {
+  background: var(--fondo);
+  color: var(--texto-suave);
+}
+
+.badge-estado.estado-draft {
+  background: var(--advertencia-fondo);
+  color: var(--advertencia);
+}
+
+.badge-estado.estado-approved {
+  background: var(--acento-suave);
+  color: var(--acento-fuerte);
+}
+
+.badge-estado.estado-rejected {
+  background: var(--peligro-fondo);
+  color: var(--peligro);
+}
+
+.descripcion-criterio {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 0.4rem 0;
+}
+
+.nota-pendiente {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  font-style: italic;
+  margin: 0.4rem 0;
+}
+
+.panel-revision {
+  background: var(--advertencia-fondo);
+  border-radius: var(--radio);
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.draft-texto,
+.texto-final {
+  margin: 0 0 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--advertencia);
+  white-space: pre-wrap;
+}
+
+.texto-final {
+  border-left-color: var(--acento);
+  margin-top: 0.5rem;
+}
+
+.rating-draft {
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+.acciones-revision {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.boton {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.boton.aprobar {
+  background: var(--acento);
+  color: #ffffff;
+}
+
+.boton.rechazar {
+  background: var(--peligro);
+  color: #ffffff;
+}
+
+.lista-evidencia {
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.registro-actividad {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.registro-actividad h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
+
+.lista-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.entrada-log {
+  font-size: 0.85rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  background: var(--fondo);
+  border-left: 3px solid var(--borde);
+}
+
+.entrada-log.agente {
+  border-left-color: var(--acento);
+}
+
+.entrada-log.humano {
+  border-left-color: var(--tierra);
+}
+
+.entrada-log .etiqueta-actor {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.entrada-log .hora {
+  color: var(--texto-suave);
+  font-size: 0.72rem;
+  margin-left: 0.4rem;
+}
+
+.log-vacio {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,37 @@
+.intro-reporte {
+  max-width: 70ch;
+  color: var(--texto-suave);
+  margin: 0 0 1rem;
+}
+
+.acciones-reporte {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.boton-reporte {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--borde);
+  background: var(--superficie);
+  color: var(--texto);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.boton-reporte:hover {
+  border-color: var(--acento);
+}
+
+.vista-reporte {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.25rem;
+  white-space: pre-wrap;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}

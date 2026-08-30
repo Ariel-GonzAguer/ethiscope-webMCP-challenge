@@ -10,7 +10,9 @@ interface ToolRegistrada {
   execute: (input: Record<string, unknown>) => Promise<unknown>;
 }
 
-async function instalarModelContextFake(): Promise<Map<string, ToolRegistrada>> {
+async function instalarModelContextFake(): Promise<
+  Map<string, ToolRegistrada>
+> {
   const tools = new Map<string, ToolRegistrada>();
 
   Object.defineProperty(document, 'modelContext', {
@@ -50,7 +52,9 @@ describe('registrarToolsWebmcp', () => {
     const tools = await instalarModelContextFake();
     expect(tools.get('list_frameworks')?.annotations?.readOnlyHint).toBe(true);
     expect(tools.get('compile_report')?.annotations?.readOnlyHint).toBe(true);
-    expect(tools.get('draft_assessment')?.annotations?.readOnlyHint).toBeUndefined();
+    expect(
+      tools.get('draft_assessment')?.annotations?.readOnlyHint,
+    ).toBeUndefined();
   });
 });
 
@@ -65,7 +69,9 @@ describe('tool list_frameworks', () => {
 
   it('filtra por marco', async () => {
     const tools = await instalarModelContextFake();
-    const resultado = (await tools.get('list_frameworks')!.execute({ framework: 'euaia' })) as {
+    const resultado = (await tools
+      .get('list_frameworks')!
+      .execute({ framework: 'euaia' })) as {
       criteria: { framework: string }[];
     };
     expect(resultado.criteria.length).toBeGreaterThan(0);
@@ -85,7 +91,13 @@ describe('tool get_audit_state', () => {
   it('refleja drafts del agente', async () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'Draft', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'Draft',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
     const tools = await instalarModelContextFake();
     const resultado = (await tools.get('get_audit_state')!.execute({})) as {
@@ -170,9 +182,21 @@ describe('tool add_evidence', () => {
 describe('tool compile_report', () => {
   it('solo incluye criterios aprobados por el humano', async () => {
     const { guardarBorrador, aprobarCriterio } = useAuditoriaStore.getState();
-    guardarBorrador('euaia-transparency', 'Approved content.', 'conforming', 'agent', 'draft_assessment');
+    guardarBorrador(
+      'euaia-transparency',
+      'Approved content.',
+      'conforming',
+      'agent',
+      'draft_assessment',
+    );
     aprobarCriterio('euaia-transparency', 'human');
-    guardarBorrador('nist-map-context', 'Unapproved content.', 'partial', 'agent', 'draft_assessment');
+    guardarBorrador(
+      'nist-map-context',
+      'Unapproved content.',
+      'partial',
+      'agent',
+      'draft_assessment',
+    );
 
     const tools = await instalarModelContextFake();
     const resultado = (await tools.get('compile_report')!.execute({})) as {
@@ -188,7 +212,13 @@ describe('tool compile_report', () => {
   it('reporta 0 aprobados si nada fue aprobado', async () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'Draft only.', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'Draft only.',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
     const tools = await instalarModelContextFake();
     const resultado = (await tools.get('compile_report')!.execute({})) as {

@@ -81,7 +81,12 @@ export async function registrarToolsWebmcp(): Promise<void> {
     execute: async () => {
       const estado = registro();
 
-      const resumen: Record<string, number> = { pending: 0, draft: 0, approved: 0, rejected: 0 };
+      const resumen: Record<string, number> = {
+        pending: 0,
+        draft: 0,
+        approved: 0,
+        rejected: 0,
+      };
       const detalle = CRITERIOS.map((criterio) => {
         const evaluacion = estado.evaluaciones[criterio.id];
         const estadoCriterio = evaluacion?.estado ?? 'pending';
@@ -134,7 +139,9 @@ export async function registrarToolsWebmcp(): Promise<void> {
         typeof input.criterion_id === 'string' ? input.criterion_id : null;
 
       if (!criterion_id || !buscarCriterio(criterion_id)) {
-        return { error: 'criterion_id must be a valid id from list_frameworks.' };
+        return {
+          error: 'criterion_id must be a valid id from list_frameworks.',
+        };
       }
 
       const rating = input.rating;
@@ -147,7 +154,13 @@ export async function registrarToolsWebmcp(): Promise<void> {
         return { error: 'text must be a non-empty assessment.' };
       }
 
-      registro().guardarBorrador(criterion_id, text.slice(0, 4000), rating as Rating, 'agent', 'draft_assessment');
+      registro().guardarBorrador(
+        criterion_id,
+        text.slice(0, 4000),
+        rating as Rating,
+        'agent',
+        'draft_assessment',
+      );
 
       return {
         status: 'draft_pending_review',
@@ -185,19 +198,33 @@ export async function registrarToolsWebmcp(): Promise<void> {
         typeof input.criterion_id === 'string' ? input.criterion_id : null;
 
       if (!criterion_id || !buscarCriterio(criterion_id)) {
-        return { error: 'criterion_id must be a valid id from list_frameworks.' };
+        return {
+          error: 'criterion_id must be a valid id from list_frameworks.',
+        };
       }
 
-      const url = typeof input.url === 'string' && input.url.length > 0 ? input.url : null;
-      const text = typeof input.text === 'string' && input.text.length > 0 ? input.text.slice(0, 500) : null;
+      const url =
+        typeof input.url === 'string' && input.url.length > 0
+          ? input.url
+          : null;
+      const text =
+        typeof input.text === 'string' && input.text.length > 0
+          ? input.text.slice(0, 500)
+          : null;
 
       if (!url && !text) {
         return { error: 'Provide at least one of: url or text.' };
       }
 
-      registro().agregarEvidencia(criterion_id, { url, text }, 'agent', 'add_evidence');
+      registro().agregarEvidencia(
+        criterion_id,
+        { url, text },
+        'agent',
+        'add_evidence',
+      );
 
-      const cantidad = registro().evaluaciones[criterion_id]?.evidencia.length ?? 0;
+      const cantidad =
+        registro().evaluaciones[criterion_id]?.evidencia.length ?? 0;
 
       return { criterion_id, evidenceCount: cantidad };
     },

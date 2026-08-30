@@ -15,12 +15,20 @@ const ETIQUETAS_ESTADO: Record<EstadoCriterio, string> = {
 
 function Auditoria() {
   const sistemaNombre = useAuditoriaStore((estado) => estado.sistemaNombre);
-  const setSistemaNombre = useAuditoriaStore((estado) => estado.setSistemaNombre);
-  const descripcionSistema = useAuditoriaStore((estado) => estado.descripcionSistema);
-  const setDescripcionSistema = useAuditoriaStore((estado) => estado.setDescripcionSistema);
+  const setSistemaNombre = useAuditoriaStore(
+    (estado) => estado.setSistemaNombre,
+  );
+  const descripcionSistema = useAuditoriaStore(
+    (estado) => estado.descripcionSistema,
+  );
+  const setDescripcionSistema = useAuditoriaStore(
+    (estado) => estado.setDescripcionSistema,
+  );
   const evaluaciones = useAuditoriaStore((estado) => estado.evaluaciones);
   const aprobarCriterio = useAuditoriaStore((estado) => estado.aprobarCriterio);
-  const rechazarCriterio = useAuditoriaStore((estado) => estado.rechazarCriterio);
+  const rechazarCriterio = useAuditoriaStore(
+    (estado) => estado.rechazarCriterio,
+  );
   const [marcoFiltro, setMarcoFiltro] = useState<MarcoId | 'todos'>('todos');
 
   const criterios =
@@ -32,8 +40,8 @@ function Auditoria() {
     <Marco>
       <h1>Audit</h1>
       <p className="intro-auditoria">
-        The agent drafts, <strong>you</strong> decide. Nothing enters the final report without
-        your explicit approval.
+        The agent drafts, <strong>you</strong> decide. Nothing enters the final
+        report without your explicit approval.
       </p>
 
       <div className="auditoria-layout">
@@ -56,10 +64,16 @@ function Auditoria() {
             />
           </div>
 
-          <div className="filtro-marco" role="group" aria-label="Filter by framework">
+          <div
+            className="filtro-marco"
+            role="group"
+            aria-label="Filter by framework"
+          >
             <button
               type="button"
-              className={marcoFiltro === 'todos' ? 'chip-marco activo' : 'chip-marco'}
+              className={
+                marcoFiltro === 'todos' ? 'chip-marco activo' : 'chip-marco'
+              }
               aria-pressed={marcoFiltro === 'todos'}
               onClick={() => setMarcoFiltro('todos')}
             >
@@ -69,7 +83,9 @@ function Auditoria() {
               <button
                 key={marco.id}
                 type="button"
-                className={marcoFiltro === marco.id ? 'chip-marco activo' : 'chip-marco'}
+                className={
+                  marcoFiltro === marco.id ? 'chip-marco activo' : 'chip-marco'
+                }
                 aria-pressed={marcoFiltro === marco.id}
                 onClick={() => setMarcoFiltro(marco.id)}
               >
@@ -84,11 +100,16 @@ function Auditoria() {
               const estado = evaluacion?.estado ?? 'pending';
 
               return (
-                <li key={criterio.id} className={`criterio tarjeta estado-${estado}`}>
+                <li
+                  key={criterio.id}
+                  className={`criterio tarjeta estado-${estado}`}
+                >
                   <div className="cabecera-criterio">
                     <h2>
-                      <span className="categoria-criterio">{criterio.categoria}</span> —{' '}
-                      {criterio.titulo}
+                      <span className="categoria-criterio">
+                        {criterio.categoria}
+                      </span>{' '}
+                      — {criterio.titulo}
                     </h2>
                     <span className={`badge-estado estado-${estado}`}>
                       {ETIQUETAS_ESTADO[estado]}
@@ -98,7 +119,8 @@ function Auditoria() {
 
                   {estado === 'pending' && (
                     <p className="nota-pendiente">
-                      Waiting for the agent to draft an assessment — or draft it yourself below.
+                      Waiting for the agent to draft an assessment — or draft it
+                      yourself below.
                     </p>
                   )}
 
@@ -137,11 +159,18 @@ function Auditoria() {
                   )}
 
                   {evaluacion && evaluacion.evidencia.length > 0 && (
-                    <ul className="lista-evidencia" aria-label={`Evidence for ${criterio.titulo}`}>
+                    <ul
+                      className="lista-evidencia"
+                      aria-label={`Evidence for ${criterio.titulo}`}
+                    >
                       {evaluacion.evidencia.map((evidencia, indice) => (
                         <li key={indice}>
                           {evidencia.url ? (
-                            <a href={evidencia.url} target="_blank" rel="noreferrer">
+                            <a
+                              href={evidencia.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
                               {evidencia.text ?? evidencia.url}
                             </a>
                           ) : (

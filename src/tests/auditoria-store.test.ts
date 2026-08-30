@@ -18,9 +18,16 @@ describe('store de auditoría', () => {
   it('guardarBorrador pone el criterio en draft con rating', () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'The system shows a disclosure banner.', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'The system shows a disclosure banner.',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
-    const evaluacion = useAuditoriaStore.getState().evaluaciones['euaia-transparency'];
+    const evaluacion =
+      useAuditoriaStore.getState().evaluaciones['euaia-transparency'];
     expect(evaluacion?.estado).toBe('draft');
     expect(evaluacion?.rating).toBe('partial');
     expect(evaluacion?.draft).toContain('disclosure banner');
@@ -28,15 +35,24 @@ describe('store de auditoría', () => {
 
   it('aprobar sin borrador no cambia el estado', () => {
     useAuditoriaStore.getState().aprobarCriterio('euaia-transparency', 'human');
-    expect(useAuditoriaStore.getState().evaluaciones['euaia-transparency']?.estado).toBe('pending');
+    expect(
+      useAuditoriaStore.getState().evaluaciones['euaia-transparency']?.estado,
+    ).toBe('pending');
   });
 
   it('aprobar un draft lo incluye en el reporte final', () => {
     const { guardarBorrador, aprobarCriterio } = useAuditoriaStore.getState();
-    guardarBorrador('euaia-transparency', 'Approved text.', 'conforming', 'agent', 'draft_assessment');
+    guardarBorrador(
+      'euaia-transparency',
+      'Approved text.',
+      'conforming',
+      'agent',
+      'draft_assessment',
+    );
     aprobarCriterio('euaia-transparency', 'human');
 
-    const evaluacion = useAuditoriaStore.getState().evaluaciones['euaia-transparency'];
+    const evaluacion =
+      useAuditoriaStore.getState().evaluaciones['euaia-transparency'];
     expect(evaluacion?.estado).toBe('approved');
     expect(evaluacion?.versionFinal).toBe('Approved text.');
 
@@ -46,10 +62,18 @@ describe('store de auditoría', () => {
 
   it('rechazar un draft lo saca del flujo', () => {
     const { guardarBorrador, rechazarCriterio } = useAuditoriaStore.getState();
-    guardarBorrador('nist-map-context', 'Bad draft.', 'non-conforming', 'agent', 'draft_assessment');
+    guardarBorrador(
+      'nist-map-context',
+      'Bad draft.',
+      'non-conforming',
+      'agent',
+      'draft_assessment',
+    );
     rechazarCriterio('nist-map-context', 'human');
 
-    expect(useAuditoriaStore.getState().evaluaciones['nist-map-context']?.estado).toBe('rejected');
+    expect(
+      useAuditoriaStore.getState().evaluaciones['nist-map-context']?.estado,
+    ).toBe('rejected');
     const reporte = compilarReporte(useAuditoriaStore.getState());
     expect(reporte).not.toContain('Bad draft.');
   });
@@ -57,9 +81,15 @@ describe('store de auditoría', () => {
   it('agregarEvidencia acumula evidencia por criterio', () => {
     useAuditoriaStore
       .getState()
-      .agregarEvidencia('euaia-logging', { url: 'https://example.com/logs', text: null }, 'agent', 'add_evidence');
+      .agregarEvidencia(
+        'euaia-logging',
+        { url: 'https://example.com/logs', text: null },
+        'agent',
+        'add_evidence',
+      );
 
-    const evidencia = useAuditoriaStore.getState().evaluaciones['euaia-logging']?.evidencia;
+    const evidencia =
+      useAuditoriaStore.getState().evaluaciones['euaia-logging']?.evidencia;
     expect(evidencia).toHaveLength(1);
     expect(evidencia?.[0]?.url).toBe('https://example.com/logs');
   });
@@ -67,7 +97,13 @@ describe('store de auditoría', () => {
   it('el log registra actor y tool', () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'x', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'x',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
     const entrada = useAuditoriaStore.getState().log[0];
     expect(entrada?.actor).toBe('agent');
@@ -83,8 +119,20 @@ describe('compilarReporte', () => {
   it('solo incluye criterios aprobados por un humano', () => {
     const { guardarBorrador, aprobarCriterio } = useAuditoriaStore.getState();
 
-    guardarBorrador('euaia-transparency', 'Included.', 'conforming', 'agent', 'draft_assessment');
-    guardarBorrador('nist-map-context', 'NOT included — still draft.', 'partial', 'agent', 'draft_assessment');
+    guardarBorrador(
+      'euaia-transparency',
+      'Included.',
+      'conforming',
+      'agent',
+      'draft_assessment',
+    );
+    guardarBorrador(
+      'nist-map-context',
+      'NOT included — still draft.',
+      'partial',
+      'agent',
+      'draft_assessment',
+    );
     aprobarCriterio('euaia-transparency', 'human');
 
     const reporte = compilarReporte(useAuditoriaStore.getState());
@@ -94,7 +142,15 @@ describe('compilarReporte', () => {
 
   it('incluye el nombre del sistema y el conteo de aprobados', () => {
     useAuditoriaStore.getState().setSistemaNombre('Support Chatbot');
-    useAuditoriaStore.getState().guardarBorrador('euaia-transparency', 'Text.', 'conforming', 'agent', 'draft_assessment');
+    useAuditoriaStore
+      .getState()
+      .guardarBorrador(
+        'euaia-transparency',
+        'Text.',
+        'conforming',
+        'agent',
+        'draft_assessment',
+      );
     useAuditoriaStore.getState().aprobarCriterio('euaia-transparency', 'human');
 
     const reporte = compilarReporte(useAuditoriaStore.getState());

@@ -27,9 +27,23 @@
 # Headers de seguridad + no-cache para HTML
 # max-age=0, must-revalidate obliga al navegador a revalidar siempre con el servidor.
 # Después de un deploy, Netlify responde con el HTML nuevo en vez de servir el cacheado.
+#
+# CSP: el proyecto es 100% self-contained (sin CDNs, fonts ni imágenes remotas).
+# Solo se carga /assets/* (build de Vite) y un favicon inline data: en index.html.
+# Por eso podemos permitir fuentes muy restrictivas:
+#   - default-src 'self': todo viene del propio origen
+#   - img-src 'self' data: necesario para el favicon SVG inline (data:image/svg+xml,...)
+#   - script-src 'self' sin 'unsafe-inline' (Vite no inyecta scripts inline en build)
+#   - style-src 'self' 'unsafe-inline': Vite puede inyectar <style> inline en dev
+#   - connect-src 'self': no se hacen fetch cross-origin
+#   - frame-ancestors 'self' reemplaza a X-Frame-Options (CSP tiene prioridad)
+#   - object-src 'none': bloquea <object>/<embed>/<applet> (Flash, Java, etc.)
+#   - base-uri 'self': evita que un atacante inyecte <base href> malicioso
+#   - form-action 'self': formularios solo envían al propio origen
 [[headers]]
   for = "/*"
   [headers.values]
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"

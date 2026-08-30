@@ -24,7 +24,9 @@ function Reporte() {
     const url = URL.createObjectURL(blob);
     const enlace = document.createElement('a');
     enlace.href = url;
-    enlace.download = `${estado.sistemaNombre.replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'audit'}-report.md`;
+    enlace.download = `${
+      estado.sistemaNombre.replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'audit'
+    }-report.md`;
     enlace.click();
     URL.revokeObjectURL(url);
   }
@@ -33,8 +35,8 @@ function Reporte() {
     <Marco>
       <h1>Report</h1>
       <p className="intro-reporte">
-        This report contains <strong>only criteria you approved</strong>. Drafts and rejected
-        items never appear here.
+        This report contains <strong>only criteria you approved</strong>. Drafts
+        and rejected items never appear here.
       </p>
 
       <div className="acciones-reporte">

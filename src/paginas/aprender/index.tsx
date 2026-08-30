@@ -13,7 +13,8 @@ const TOOLS: readonly ToolDoc[] = [
   {
     nombre: 'list_frameworks',
     tipo: 'read',
-    queHace: 'Lists the EU AI Act and NIST AI RMF criteria with ids, categories and descriptions.',
+    queHace:
+      'Lists the EU AI Act and NIST AI RMF criteria with ids, categories and descriptions.',
     ejemplo: '"What criteria apply to transparency?"',
   },
   {
@@ -25,8 +26,10 @@ const TOOLS: readonly ToolDoc[] = [
   {
     nombre: 'draft_assessment',
     tipo: 'write',
-    queHace: 'Writes a draft assessment with a proposed rating. Stays in "pending review" — never enters the report by itself.',
-    ejemplo: '"Draft an assessment of our chatbot against the EU AI Act transparency criterion."',
+    queHace:
+      'Writes a draft assessment with a proposed rating. Stays in "pending review" — never enters the report by itself.',
+    ejemplo:
+      '"Draft an assessment of our chatbot against the EU AI Act transparency criterion."',
   },
   {
     nombre: 'add_evidence',
@@ -50,11 +53,17 @@ export default function Aprender() {
       <h1>Learn — how EthiScope works</h1>
       <p className="intro-aprender">
         EthiScope registers <strong>5 structured tools</strong> via{' '}
-        <a href="https://webmachinelearning.github.io/webmcp/" target="_blank" rel="noreferrer">
+        <a
+          href="https://webmachinelearning.github.io/webmcp/"
+          target="_blank"
+          rel="noreferrer"
+        >
           WebMCP
         </a>
-        . The core pattern is trust: <strong>the agent drafts, the human approves.</strong>{' '}
-        <code>compile_report</code> can only include criteria you explicitly approved in the UI.
+        . The core pattern is trust:{' '}
+        <strong>the agent drafts, the human approves.</strong>{' '}
+        <code>compile_report</code> can only include criteria you explicitly
+        approved in the UI.
       </p>
 
       <p className={`estado-webmcp ${activo ? 'activo' : ''}`} role="status">
@@ -83,9 +92,17 @@ export default function Aprender() {
 
       <h2>The trust loop</h2>
       <ol className="lista-bucle">
-        <li>The agent drafts an assessment for a criterion — it lands in <em>Draft</em>.</li>
-        <li>You read it, check the evidence, and <strong>Approve</strong> or <strong>Reject</strong>.</li>
-        <li>Only approved criteria appear in the Report, copyable as markdown.</li>
+        <li>
+          The agent drafts an assessment for a criterion — it lands in{' '}
+          <em>Draft</em>.
+        </li>
+        <li>
+          You read it, check the evidence, and <strong>Approve</strong> or{' '}
+          <strong>Reject</strong>.
+        </li>
+        <li>
+          Only approved criteria appear in the Report, copyable as markdown.
+        </li>
         <li>Every action is logged: who did what, with which tool.</li>
       </ol>
       <p className="cierre-aprender">

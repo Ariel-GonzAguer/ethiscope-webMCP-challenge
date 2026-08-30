@@ -126,7 +126,11 @@ export const CRITERIOS: readonly Criterio[] = [
   },
 ] as const;
 
-export const MARCOS: readonly { id: MarcoId; nombre: string; descripcion: string }[] = [
+export const MARCOS: readonly {
+  id: MarcoId;
+  nombre: string;
+  descripcion: string;
+}[] = [
   {
     id: 'euaia',
     nombre: 'EU AI Act',

@@ -40,7 +40,8 @@ export const useAuditoriaStore = create<EstadoAuditoria & AccionesAuditoria>()(
 
       setSistemaNombre: (nombre) => set({ sistemaNombre: nombre }),
 
-      setDescripcionSistema: (descripcion) => set({ descripcionSistema: descripcion }),
+      setDescripcionSistema: (descripcion) =>
+        set({ descripcionSistema: descripcion }),
 
       guardarBorrador: (criterioId, texto, rating, actor, tool) => {
         set((estado) => {
@@ -88,7 +89,9 @@ export const useAuditoriaStore = create<EstadoAuditoria & AccionesAuditoria>()(
                 id: generarId(),
                 actor,
                 tool,
-                message: `Evidence added to ${criterioId}: ${evidencia.url ?? evidencia.text?.slice(0, 80) ?? ''}`,
+                message: `Evidence added to ${criterioId}: ${
+                  evidencia.url ?? evidencia.text?.slice(0, 80) ?? ''
+                }`,
                 timestamp: Date.now(),
               },
             ],
@@ -180,11 +183,17 @@ export function compilarReporte(estado: EstadoAuditoria): string {
         })
         .filter((linea): linea is string => linea !== null);
 
-      return `## ${criterio.categoria} — ${criterio.titulo}\n\nRating: **${evaluacion.rating ?? 'n/a'}**\n\n${evaluacion.versionFinal}\n\n${evidencias.length > 0 ? `${evidencias.join('\n')}\n` : ''}`;
+      return `## ${criterio.categoria} — ${criterio.titulo}\n\nRating: **${
+        evaluacion.rating ?? 'n/a'
+      }**\n\n${evaluacion.versionFinal}\n\n${
+        evidencias.length > 0 ? `${evidencias.join('\n')}\n` : ''
+      }`;
     })
     .filter((seccion): seccion is string => seccion !== null);
 
-  const encabezado = `# AI Ethics Audit Report — ${estado.sistemaNombre}\n\n${estado.descripcionSistema ? `${estado.descripcionSistema}\n` : ''}*${aprobados.length} criteria approved by a human reviewer.*\n`;
+  const encabezado = `# AI Ethics Audit Report — ${estado.sistemaNombre}\n\n${
+    estado.descripcionSistema ? `${estado.descripcionSistema}\n` : ''
+  }*${aprobados.length} criteria approved by a human reviewer.*\n`;
 
   return [encabezado, ...secciones].join('\n');
 }

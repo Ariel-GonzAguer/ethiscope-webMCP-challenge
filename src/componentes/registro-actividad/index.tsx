@@ -5,7 +5,10 @@ export default function RegistroActividad() {
   const recientes = [...log].reverse().slice(0, 40);
 
   return (
-    <aside className="registro-actividad tarjeta" aria-label="Audit activity log">
+    <aside
+      className="registro-actividad tarjeta"
+      aria-label="Audit activity log"
+    >
       <h2>Activity</h2>
       {recientes.length === 0 ? (
         <p className="log-vacio">
@@ -16,14 +19,19 @@ export default function RegistroActividad() {
           {recientes.map((entrada) => (
             <li
               key={entrada.id}
-              className={`entrada-log ${entrada.actor === 'agent' ? 'agente' : 'humano'}`}
+              className={`entrada-log ${
+                entrada.actor === 'agent' ? 'agente' : 'humano'
+              }`}
             >
               <div>
                 <span className="etiqueta-actor">{entrada.actor}</span>
-                <span className="hora">{new Date(entrada.timestamp).toLocaleTimeString()}</span>
+                <span className="hora">
+                  {new Date(entrada.timestamp).toLocaleTimeString()}
+                </span>
               </div>
               <div>
-                {entrada.tool ? <em>{entrada.tool}:</em> : null} {entrada.message}
+                {entrada.tool ? <em>{entrada.tool}:</em> : null}{' '}
+                {entrada.message}
               </div>
             </li>
           ))}

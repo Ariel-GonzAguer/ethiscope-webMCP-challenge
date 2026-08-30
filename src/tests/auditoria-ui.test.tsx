@@ -17,7 +17,9 @@ beforeEach(() => {
 describe('página Auditoría', () => {
   it('renderiza los criterios del marco EU AI Act', () => {
     render(<Auditoria />);
-    expect(screen.getByText(/Transparency and information/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Transparency and information/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Human oversight/)).toBeInTheDocument();
   });
 
@@ -27,18 +29,28 @@ describe('página Auditoría', () => {
 
     await usuario.click(screen.getByRole('button', { name: 'NIST AI RMF' }));
 
-    expect(screen.queryByText(/Transparency and information/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Transparency and information/),
+    ).not.toBeInTheDocument();
     expect(screen.getByText(/AI risk governance/)).toBeInTheDocument();
   });
 
   it('muestra el draft del agente con botones de aprobación', () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'Agent draft here.', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'Agent draft here.',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
     render(<Auditoria />);
     expect(screen.getByText('Agent draft here.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /approve/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /approve/i }),
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reject/i })).toBeInTheDocument();
   });
 
@@ -46,7 +58,13 @@ describe('página Auditoría', () => {
     const usuario = userEvent.setup();
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'Final text.', 'conforming', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'Final text.',
+        'conforming',
+        'agent',
+        'draft_assessment',
+      );
 
     render(<Auditoria />);
     await usuario.click(screen.getByRole('button', { name: /approve/i }));
@@ -59,7 +77,13 @@ describe('página Auditoría', () => {
     const usuario = userEvent.setup();
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'Bad text.', 'non-conforming', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'Bad text.',
+        'non-conforming',
+        'agent',
+        'draft_assessment',
+      );
 
     render(<Auditoria />);
     await usuario.click(screen.getByRole('button', { name: /reject/i }));
@@ -71,7 +95,12 @@ describe('página Auditoría', () => {
   it('muestra evidencia adjunta con enlace', () => {
     useAuditoriaStore
       .getState()
-      .agregarEvidencia('euaia-logging', { url: 'https://example.com/ev', text: 'Log review' }, 'agent', 'add_evidence');
+      .agregarEvidencia(
+        'euaia-logging',
+        { url: 'https://example.com/ev', text: 'Log review' },
+        'agent',
+        'add_evidence',
+      );
 
     render(<Auditoria />);
     const enlace = screen.getByRole('link', { name: 'Log review' });
@@ -81,9 +110,17 @@ describe('página Auditoría', () => {
   it('el activity log muestra entradas del agente con tool', () => {
     useAuditoriaStore
       .getState()
-      .guardarBorrador('euaia-transparency', 'x', 'partial', 'agent', 'draft_assessment');
+      .guardarBorrador(
+        'euaia-transparency',
+        'x',
+        'partial',
+        'agent',
+        'draft_assessment',
+      );
 
     render(<Auditoria />);
-    expect(screen.getByLabelText('Audit activity log')).toHaveTextContent('draft_assessment');
+    expect(screen.getByLabelText('Audit activity log')).toHaveTextContent(
+      'draft_assessment',
+    );
   });
 });

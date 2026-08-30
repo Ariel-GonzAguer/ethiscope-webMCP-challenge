@@ -10,7 +10,8 @@
     "build": "tsc && tsc -p tsconfig.node.json && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+      "deploy:netlify": "pnpm audit && pnpm test && bash scripts/deploy-netlify.sh"
   },
   "dependencies": {
     "@arielgonzaguer/michi-router": "^3.3.2",

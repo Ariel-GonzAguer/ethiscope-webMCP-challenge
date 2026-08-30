@@ -173,7 +173,7 @@ export function compilarReporte(estado: EstadoAuditoria): string {
   const secciones = aprobados
     .map((criterio) => {
       const evaluacion = estado.evaluaciones[criterio.id];
-      if (!evaluacion || evaluacion.versionFinal === null) return null;
+      if (evaluacion?.versionFinal == null) return null;
 
       const evidencias = evaluacion.evidencia
         .map((evidencia) => {

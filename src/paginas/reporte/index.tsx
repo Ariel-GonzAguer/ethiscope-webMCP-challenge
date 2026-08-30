@@ -40,6 +40,8 @@ function Reporte() {
       </p>
 
       <div className="acciones-reporte">
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises --
+            `copiar` y `descargar` usan la Clipboard API que es async por diseño. */}
         <button type="button" className="boton-reporte" onClick={copiar}>
           {copiado ? 'Copied!' : 'Copy markdown'}
         </button>

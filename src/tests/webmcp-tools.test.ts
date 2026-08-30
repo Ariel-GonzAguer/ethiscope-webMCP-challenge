@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/require-await --
+   Los mocks del contrato WebMCP exponen métodos `async` aunque el motor de
+   reglas es síncrono; replican la firma de la API real. */
+
 import { beforeEach, describe, expect, it } from 'vitest';
 import { registrarToolsWebmcp } from '../webmcp/registrarTools';
 import { useAuditoriaStore } from '../store/auditoria';

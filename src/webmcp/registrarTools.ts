@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/require-await --
+   La API de WebMCP exige que los handlers `execute` sean `async` aunque el
+   motor de reglas sea síncrono. El contrato externo (browser/agent) asume
+   `Promise<unknown>` como tipo de retorno. */
+
 import { useAuditoriaStore, compilarReporte } from '../store/auditoria';
 import { CRITERIOS, MARCOS, buscarCriterio } from '../datos/marcos';
 import type { Rating } from '../tipos/dominio';
